@@ -3,6 +3,7 @@ package com.joe.st_unitas.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -38,14 +39,13 @@ class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
         viewModel.editOneSecond.observe(this, Observer {
             if (viewDataBinding.searchEdit.text.toString() != "") {
                 viewModel.progress.value = true
-                viewModel.getImages(viewDataBinding.searchEdit.text.toString())
+                viewModel.getImages(this, viewDataBinding.searchEdit.text.toString())
             }
         })
 
         viewModel.images.observe(this, Observer { images ->
             viewModel.progress.value = false
-            // TODO : List to PageList
-            imagesAdapter.submitList(images as PagedList<Image>)
+            imagesAdapter.submitList(images)
         })
 
         viewModel.error.observe(this, Observer { msg ->

@@ -1,6 +1,9 @@
 package com.joe.st_unitas.viewmodel
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
 import com.joe.st_unitas.data.Image
 import com.joe.st_unitas.model.Repository
 import io.reactivex.Observable
@@ -13,25 +16,14 @@ import java.util.concurrent.TimeUnit
 class ImageSearchViewModel(private val repository: Repository) : BaseViewModel() {
     val editDispoableQueue = PriorityQueue<Disposable>()
     val editOneSecond = MutableLiveData<Any>()
-    val images = MutableLiveData<List<Image>>()
+    val images = MutableLiveData<PagedList<Image>>()
     val error = MutableLiveData<String>()
     val progress = MutableLiveData<Boolean>()
 
-    fun getImages(query: String) {
-        addDisposable(repository.getImages(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (!it.isEmpty()) {
-                    images.value = it
-                } else {
-                    error.value = "검색 결과가 없습니다."
-                }
-            }, {
-                it.printStackTrace()
-                error.value = "이미지를 불러올 수 없습니다."
-            })
-        )
+    fun getImages(owner: LifecycleOwner, query: String) {
+        repository.getImages(compositeDisposable, query).observe(owner, androidx.lifecycle.Observer {
+            images.value = it
+        })
     }
 
     fun updateSearchEdit() {
