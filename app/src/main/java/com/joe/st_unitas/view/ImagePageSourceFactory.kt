@@ -13,11 +13,10 @@ class ImagePageSourceFactory(
     private val query: String
 ) : DataSource.Factory<Int, Image>() {
 
-    private val sourceLiveData = MutableLiveData<ImageKeyDataSource>()
+    //private val sourceLiveData = MutableLiveData<ImageKeyDataSource>()
 
     override fun create(): DataSource<Int, Image> {
-        val source = ImageKeyDataSource(retrofitService, compositeDisposable, query)
-        sourceLiveData.postValue(source)
-        return source
+        //sourceLiveData.postValue(source)
+        return ImageKeyDataSource(retrofitService, compositeDisposable, query)
     }
 }

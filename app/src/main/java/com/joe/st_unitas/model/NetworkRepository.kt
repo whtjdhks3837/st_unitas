@@ -15,9 +15,9 @@ class NetworkRepository(private val retrofitService: RetrofitService) : Reposito
         return LivePagedListBuilder(
             sourceFactory,
             PagedList.Config.Builder()
-                .setInitialLoadSizeHint(15)
-                .setPageSize(15)
-                .setPrefetchDistance(10)
+                .setInitialLoadSizeHint(20)
+                .setPageSize(20)
+                .setPrefetchDistance(18)
                 .setEnablePlaceholders(true)
                 .build()
         ).build()

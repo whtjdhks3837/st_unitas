@@ -12,8 +12,8 @@ interface RetrofitService {
     @GET("v2/search/image")
     fun getImages(
         @Header("Authorization") token: String = kakaoToken,
-        @Query("page") page: Int,
-        @Query("size") size: Int,
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 80,
         @Query("query") query: String
     ) : Single<ImageResponse>
 }

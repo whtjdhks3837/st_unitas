@@ -1,5 +1,6 @@
 package com.joe.st_unitas.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +23,7 @@ class ImageSearchViewModel(private val repository: Repository) : BaseViewModel()
 
     fun getImages(owner: LifecycleOwner, query: String) {
         repository.getImages(compositeDisposable, query).observe(owner, androidx.lifecycle.Observer {
+            Log.e("tag", "getImages ${it.size}")
             images.value = it
         })
     }

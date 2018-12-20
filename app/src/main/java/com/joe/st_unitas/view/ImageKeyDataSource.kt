@@ -4,10 +4,9 @@ import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.joe.st_unitas.api.RetrofitService
 import com.joe.st_unitas.data.Image
-import com.joe.st_unitas.data.ImageResponse
-import com.joe.st_unitas.kakaoToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class ImageKeyDataSource(
     private val retrofitService: RetrofitService,
@@ -18,10 +17,11 @@ class ImageKeyDataSource(
         Log.e("tag", "loadInitial")
         Log.e("tag", "${params.requestedLoadSize}, $query")
         compositeDisposable.add(
-            retrofitService.getImages(page = 1, size = params.requestedLoadSize, query = query)
+            retrofitService.getImages(size = params.requestedLoadSize, query = query)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    callback.onResult(it.documents, 0, params.requestedLoadSize)
+                    Log.e("tag", "${it.documents.size}")
+                    callback.onResult(it.documents, 0, 2)
                 }, {
                     it.printStackTrace()
                 })
@@ -29,17 +29,17 @@ class ImageKeyDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Image>) {
-        Log.e("tag", "loadBefore")
+        Log.e("tag", "loadAfter")
         Log.e("tag", "${params.key}, ${params.requestedLoadSize}, $query")
         compositeDisposable.add(
             retrofitService.getImages(
                 page = params.key,
                 size = params.requestedLoadSize,
-                query = query
-            )
+                query = query)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    callback.onResult(it.documents, params.key + params.requestedLoadSize)
+                    callback.onResult(it.documents, params.key + 1)
                 }, {
                     it.printStackTrace()
                 })
