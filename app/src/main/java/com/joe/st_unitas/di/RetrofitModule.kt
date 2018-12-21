@@ -1,5 +1,6 @@
 package com.joe.st_unitas.di
 
+import com.joe.st_unitas.BuildConfig
 import com.joe.st_unitas.api.RetrofitService
 import com.joe.st_unitas.url
 import okhttp3.Interceptor
@@ -27,7 +28,10 @@ val retrofitModule = module {
 
     single {
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG)
+                HttpLoggingInterceptor.Level.BASIC
+            else
+                HttpLoggingInterceptor.Level.NONE
         } as Interceptor
     }
 }
