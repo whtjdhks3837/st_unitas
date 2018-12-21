@@ -14,14 +14,14 @@ import com.joe.st_unitas.data.Image
 import com.joe.st_unitas.databinding.ActivityImageSearchBinding
 import com.joe.st_unitas.viewmodel.ImageSearchViewModel
 import com.joe.st_unitas.viewmodel.ImageSearchViewModelFactory
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
 class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
 
     override val layoutResourceId: Int = R.layout.activity_image_search
-    private val imageSearchViewModelFactory: ImageSearchViewModelFactory by inject()
     private val viewModel: ImageSearchViewModel by lazy {
-        ViewModelProviders.of(this, imageSearchViewModelFactory)
+        ViewModelProviders.of(this, ImageSearchViewModelFactory(get()))
             .get(ImageSearchViewModel::class.java)
     }
     private val imagesAdapter: ImagesAdapter by inject()

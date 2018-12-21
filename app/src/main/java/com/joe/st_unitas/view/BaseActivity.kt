@@ -9,7 +9,7 @@ import com.joe.st_unitas.viewmodel.ImageSearchViewModel
 import com.joe.st_unitas.viewmodel.ImageSearchViewModelFactory
 import org.koin.android.ext.android.inject
 
-abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     lateinit var viewDataBinding: T
     abstract val layoutResourceId: Int
 

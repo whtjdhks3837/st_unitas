@@ -1,6 +1,7 @@
 package com.joe.st_unitas.view
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
@@ -11,11 +12,14 @@ import com.joe.st_unitas.databinding.SearchImageItemBinding.*
 class ImagesAdapter(private val context: Context) : PagedListAdapter<Image, ImagesViewHolder>(diffCallback) {
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Image>() {
-            override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean =
-                oldItem.imageUrl == newItem.imageUrl
+            override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
+                return oldItem.imageUrl == newItem.imageUrl
+            }
 
-            override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean =
-                oldItem.imageUrl == newItem.imageUrl
+
+            override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
@@ -25,6 +29,7 @@ class ImagesAdapter(private val context: Context) : PagedListAdapter<Image, Imag
     }
 
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
+        Log.e("tag", "onBindViewHolder position : $position")
         holder.bind(getItem(position))
     }
 }

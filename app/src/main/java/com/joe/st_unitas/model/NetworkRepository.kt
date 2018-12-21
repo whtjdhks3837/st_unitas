@@ -1,6 +1,7 @@
 package com.joe.st_unitas.model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.joe.st_unitas.api.RetrofitService
@@ -17,7 +18,7 @@ class NetworkRepository(private val retrofitService: RetrofitService) : Reposito
             PagedList.Config.Builder()
                 .setInitialLoadSizeHint(20)
                 .setPageSize(20)
-                .setPrefetchDistance(18)
+                .setPrefetchDistance(1)
                 .setEnablePlaceholders(true)
                 .build()
         ).build()
