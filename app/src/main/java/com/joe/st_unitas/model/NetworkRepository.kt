@@ -11,13 +11,17 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 
 class NetworkRepository(private val retrofitService: RetrofitService) : Repository {
-    override fun getImages(compositeDisposable: CompositeDisposable, query: String): LiveData<PagedList<Image>> {
-        val sourceFactory = ImagePageSourceFactory(retrofitService, compositeDisposable, query)
+    override fun getImages(
+        compositeDisposable: CompositeDisposable,
+        query: String,
+        error: MutableLiveData<String>
+    ): LiveData<PagedList<Image>> {
+        val sourceFactory = ImagePageSourceFactory(retrofitService, compositeDisposable, query, error)
         return LivePagedListBuilder(
             sourceFactory,
             PagedList.Config.Builder()
-                .setInitialLoadSizeHint(20)
-                .setPageSize(20)
+                .setInitialLoadSizeHint(50)
+                .setPageSize(50)
                 .setPrefetchDistance(1)
                 .setEnablePlaceholders(true)
                 .build()

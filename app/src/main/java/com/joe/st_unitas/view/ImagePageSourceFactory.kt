@@ -11,9 +11,10 @@ import io.reactivex.disposables.CompositeDisposable
 class ImagePageSourceFactory(
     private val retrofitService: RetrofitService,
     private val compositeDisposable: CompositeDisposable,
-    private val query: String
+    private val query: String,
+    private val error: MutableLiveData<String>
 ) : DataSource.Factory<Int, Image>() {
 
     override fun create(): DataSource<Int, Image> =
-        ImageKeyDataSource(retrofitService, compositeDisposable, query)
+        ImageKeyDataSource(retrofitService, compositeDisposable, query, error)
 }

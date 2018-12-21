@@ -1,21 +1,18 @@
 package com.joe.st_unitas.view
 
+import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joe.st_unitas.R
-import com.joe.st_unitas.data.Image
 import com.joe.st_unitas.databinding.ActivityImageSearchBinding
 import com.joe.st_unitas.viewmodel.ImageSearchViewModel
 import com.joe.st_unitas.viewmodel.ImageSearchViewModelFactory
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
 
 class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
 
@@ -24,11 +21,11 @@ class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
         ViewModelProviders.of(this, ImageSearchViewModelFactory(get()))
             .get(ImageSearchViewModel::class.java)
     }
-    private val imagesAdapter: ImagesAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val imagesAdapter = ImagesAdapter(this, getDisplaySize())
         viewDataBinding.listView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = imagesAdapter
@@ -36,10 +33,12 @@ class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
 
         viewDataBinding.searchEdit.addTextChangedListener(textWatcher)
 
-        viewModel.editOneSecond.observe(this, Observer {
+        viewModel.editOneSecondAfter.observe(this, Observer {
             if (viewDataBinding.searchEdit.text.toString() != "") {
                 viewModel.progress.value = true
                 viewModel.getImages(this, viewDataBinding.searchEdit.text.toString())
+            } else {
+                imagesAdapter.submitList(null)
             }
         })
 
@@ -57,12 +56,15 @@ class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
         viewDataBinding.setLifecycleOwner(this)
     }
 
+    private fun getDisplaySize(): Point {
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        return size
+    }
+
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            viewModel.editDispoableQueue.forEach {
-                it.dispose()
-            }
-            viewModel.editDispoableQueue.clear()
             viewModel.updateSearchEdit()
         }
 

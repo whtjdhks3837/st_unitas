@@ -5,9 +5,16 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class ImageResponse(
-    @SerializedName("documents") @Expose val documents: List<Image>
+    @SerializedName("documents") val documents: List<Image>,
+    @SerializedName("meta") val meta: Meta
 )
 
 data class Image(
-    @SerializedName("image_url") @Expose val imageUrl: String
+    @SerializedName("image_url") val imageUrl: String,
+    @SerializedName("height") val height: Int,
+    @SerializedName("width") val width: Int
+)
+
+data class Meta(
+    @SerializedName("is_end") val isEnd: Boolean
 )

@@ -1,5 +1,7 @@
 package com.joe.st_unitas.di
 
+import android.app.Activity
+import android.graphics.Point
 import com.joe.st_unitas.model.NetworkRepository
 import com.joe.st_unitas.model.Repository
 import com.joe.st_unitas.view.ImagesAdapter
@@ -14,9 +16,5 @@ val imageSearchModule = module {
 
     factory {
         ImageSearchViewModelFactory(get())
-    }
-
-    factory {
-        ImagesAdapter(androidContext())
     }
 }

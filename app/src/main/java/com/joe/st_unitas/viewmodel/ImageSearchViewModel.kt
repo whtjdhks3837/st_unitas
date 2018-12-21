@@ -1,6 +1,5 @@
 package com.joe.st_unitas.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -13,28 +12,27 @@ import java.util.concurrent.TimeUnit
 import androidx.lifecycle.Observer
 
 class ImageSearchViewModel(private val repository: Repository) : BaseViewModel() {
-    val editDispoableQueue = PriorityQueue<Disposable>()
-    val editOneSecond = MutableLiveData<Any>()
+    val editOneSecondAfter = MutableLiveData<Any>()
     val images = MutableLiveData<PagedList<Image>>()
     val error = MutableLiveData<String>()
     val progress = MutableLiveData<Boolean>()
 
     fun getImages(owner: LifecycleOwner, query: String) {
-        repository.getImages(compositeDisposable, query).observe(owner, Observer {
+        repository.getImages(compositeDisposable, query, error).observe(owner, Observer {
             images.value = it
         })
     }
 
     fun updateSearchEdit() {
-        editDispoableQueue.add(
-            Observable
-                .timer(1000L, TimeUnit.MILLISECONDS)
-                .subscribe({
-                    editOneSecond.postValue("")
-                }, {
-                    it.printStackTrace()
-                })
+        compositeDisposable.clear()
+        addDisposable(Observable
+            .timer(1000L, TimeUnit.MILLISECONDS)
+            .subscribe({
+                editOneSecondAfter.postValue("")
+            }, {
+                it.printStackTrace()
+                error.value = "알 수 없는 오류입니다."
+            })
         )
-        addDisposable(editDispoableQueue.last())
     }
 }
