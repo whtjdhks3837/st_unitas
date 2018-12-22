@@ -7,5 +7,10 @@ import com.joe.st_unitas.data.Image
 import io.reactivex.disposables.CompositeDisposable
 
 interface Repository {
-    fun getImages(compositeDisposable: CompositeDisposable, query: String, error: MutableLiveData<String>): LiveData<PagedList<Image>>
+    fun getImages(
+        compositeDisposable: CompositeDisposable,
+        query: String,
+        progress: MutableLiveData<Boolean>,
+        error: MutableLiveData<String>
+    ): LiveData<PagedList<Image>>
 }

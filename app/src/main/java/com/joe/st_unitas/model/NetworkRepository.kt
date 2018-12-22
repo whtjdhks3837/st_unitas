@@ -14,9 +14,10 @@ class NetworkRepository(private val retrofitService: RetrofitService) : Reposito
     override fun getImages(
         compositeDisposable: CompositeDisposable,
         query: String,
+        progress: MutableLiveData<Boolean>,
         error: MutableLiveData<String>
     ): LiveData<PagedList<Image>> {
-        val sourceFactory = ImagePageSourceFactory(retrofitService, compositeDisposable, query, error)
+        val sourceFactory = ImagePageSourceFactory(retrofitService, compositeDisposable, query, progress, error)
         return LivePagedListBuilder(
             sourceFactory,
             PagedList.Config.Builder()

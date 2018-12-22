@@ -4,6 +4,7 @@ import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,22 +29,20 @@ class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
         val imagesAdapter = ImagesAdapter(this, getDisplaySize())
         viewDataBinding.listView.apply {
             layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
             adapter = imagesAdapter
         }
 
         viewDataBinding.searchEdit.addTextChangedListener(textWatcher)
 
         viewModel.editOneSecondAfter.observe(this, Observer {
+            imagesAdapter.submitList(null)
             if (viewDataBinding.searchEdit.text.toString() != "") {
-                viewModel.progress.value = true
                 viewModel.getImages(this, viewDataBinding.searchEdit.text.toString())
-            } else {
-                imagesAdapter.submitList(null)
             }
         })
 
         viewModel.images.observe(this, Observer { images ->
-            viewModel.progress.value = false
             imagesAdapter.submitList(images)
         })
 

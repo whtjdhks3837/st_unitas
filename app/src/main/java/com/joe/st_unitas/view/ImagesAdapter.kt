@@ -30,6 +30,7 @@ class ImagesAdapter(private val context: Context, private val displaySize: Point
     }
 
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
+        Log.e("tag", "onBindViewHolder $position")
         holder.bind(getItem(position))
     }
 }
