@@ -1,6 +1,5 @@
 package com.joe.st_unitas.api
 
-import com.joe.st_unitas.data.Image
 import com.joe.st_unitas.data.ImageResponse
 import com.joe.st_unitas.kakaoToken
 import io.reactivex.Single

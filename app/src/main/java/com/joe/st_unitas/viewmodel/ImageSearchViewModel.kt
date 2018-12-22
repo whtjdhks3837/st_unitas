@@ -1,17 +1,14 @@
 package com.joe.st_unitas.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.joe.st_unitas.data.Image
 import com.joe.st_unitas.model.Repository
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
-import java.util.*
 import java.util.concurrent.TimeUnit
-import androidx.lifecycle.Observer
 
 class ImageSearchViewModel(private val repository: Repository) : BaseViewModel() {
     val editOneSecondAfter = MutableLiveData<Any>()
