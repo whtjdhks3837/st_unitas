@@ -24,7 +24,7 @@ class NetworkRepository(private val retrofitService: RetrofitService) : Reposito
                 .setInitialLoadSizeHint(50)
                 .setPageSize(50)
                 .setPrefetchDistance(1)
-                .setEnablePlaceholders(true)
+                .setEnablePlaceholders(false)
                 .build()
         ).build()
     }

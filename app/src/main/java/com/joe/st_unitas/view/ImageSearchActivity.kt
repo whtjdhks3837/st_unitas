@@ -29,7 +29,6 @@ class ImageSearchActivity : BaseActivity<ActivityImageSearchBinding>() {
         val imagesAdapter = ImagesAdapter(this, getDisplaySize())
         viewDataBinding.listView.apply {
             layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
             adapter = imagesAdapter
         }
 
