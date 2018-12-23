@@ -14,5 +14,5 @@ interface RetrofitService {
         @Query("page") page: Int = 1,
         @Query("size") size: Int = 80,
         @Query("query") query: String
-    ) : Single<ImageResponse>
+    ): Single<ImageResponse>
 }

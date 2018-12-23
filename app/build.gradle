@@ -50,5 +50,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.paging:paging-runtime:2.1.0-alpha01"
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
 }

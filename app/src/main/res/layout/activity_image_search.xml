@@ -40,7 +40,7 @@
         <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.aa ? View.VISIBLE : View.INVISIBLE}"
+                android:visibility="@{viewmodel.progress ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

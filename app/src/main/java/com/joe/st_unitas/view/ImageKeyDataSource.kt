@@ -19,7 +19,6 @@ class ImageKeyDataSource(
     private val error: MutableLiveData<String>
 ) : PageKeyedDataSource<Int, Image>() {
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Image>) {
-        Log.e("tag", "loadInitial")
         progress.postValue(true)
         compositeDisposable.add(
             retrofitService.getImages(size = params.requestedLoadSize, query = query)
@@ -43,7 +42,6 @@ class ImageKeyDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Image>) {
-        Log.e("tag", "loadAfter ${params.key}")
         progress.postValue(true)
         compositeDisposable.add(
             retrofitService.getImages(
